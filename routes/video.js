@@ -107,11 +107,11 @@ router.get('/add/:magnet', function(req, res) {
 //	The API call to start streaming the selected file to the video tag.
 //
 //	magnet 		-> 	Magnet Hash
-//	file_name 	-> 	the selected file name that is within the Magnet Hash
+//	file_ext 	-> 	the selected file name that is within the Magnet Hash
 //
 //	return 		<-	A chunk of the video file as buffer (binary data)
 //
-router.get('/stream/:magnet/:file_name', function(req, res, next) {
+router.get('/stream/:magnet/:file_ext', function(req, res, next) {
 
 	//
 	//	1.	Extract the magnet Hash and save it in a meaningful variable.
@@ -136,9 +136,10 @@ router.get('/stream/:magnet/:file_name', function(req, res, next) {
 	//
 	for(i = 0; i < tor.files.length; i++)
 	{
-		if(tor.files[i].name == req.params.file_name)
+		if(!tor.files[i].name.include('sample.') && tor.files[i].name.includes(req.params.file_ext))
 		{
 			file = tor.files[i];
+			break;
 		}
 	}
 
